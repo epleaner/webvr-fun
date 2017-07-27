@@ -124,7 +124,7 @@ export default class SceneHelper {
         if (this.vrDisplay.stageParameters) {
           setStageDimensions(this.vrDisplay.stageParameters);
         }
-        this.vrDisplay.requestAnimationFrame(() => this.animate());
+        this.vrDisplay.requestAnimationFrame((timestamp) => this.animate(timestamp));
       }
     });
   }
@@ -139,9 +139,9 @@ export default class SceneHelper {
       // move towards viewer
       shape.translateOnAxis(shape.worldToLocal(new THREE.Vector3(0, this.controls.userHeight, 0)), 0.01);
 
-      shape.rotation.x += delta * shape.rotationSpeed.x;
-      shape.rotation.y += delta * shape.rotationSpeed.y;
-      shape.rotation.z += delta * shape.rotationSpeed.z;
+      shape.rotateX(delta * shape.rotationSpeed.x);
+      shape.rotateY(delta * shape.rotationSpeed.y);
+      shape.rotateZ(delta * shape.rotationSpeed.z);
     });
   }
 
@@ -160,7 +160,7 @@ export default class SceneHelper {
     // Render the scene.
     this.effect.render(this.scene, this.camera);
 
-    this.vrDisplay.requestAnimationFrame(() => this.animate());
+    this.vrDisplay.requestAnimationFrame((timestamp) => this.animate(timestamp));
   }
 
   setStageDimensions(stage) {

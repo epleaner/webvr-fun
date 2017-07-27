@@ -89,17 +89,18 @@ var drawShapes = function drawShapes(scene) {
     morphTargets: true
   });
 
-  // let boxGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-  // let sphereGeometry = new THREE.SphereGeometry( 1, 32, 32 );
+  // const boxGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+  // const sphereGeometry = new THREE.SphereGeometry( 1, 32, 32 );
 
   var geometry = new THREE.BoxGeometry(1, 1, 1);
 
-  for (var i = 1; i < 50; i++) {
-    var shape = new THREE.Mesh(geometry, material);
-    var max = 50;
-    var min = -50;
+  var count = 50;
+  var range = 100;
 
-    shape.position.set(randomInRange(-50, 50), randomInRange(-50, 50), randomInRange(-50, 50));
+  for (var i = 1; i < count; i++) {
+    var shape = new THREE.Mesh(geometry, material);
+
+    shape.position.set(randomInRange(-range, range), randomInRange(-range, range), randomInRange(-range, range));
     shape.rotationSpeed = {
       x: randomInRange(-1, 1),
       y: randomInRange(-1, 1),
@@ -251,7 +252,7 @@ class SceneHelper {
         if (this.vrDisplay.stageParameters) {
           setStageDimensions(this.vrDisplay.stageParameters);
         }
-        this.vrDisplay.requestAnimationFrame(() => this.animate());
+        this.vrDisplay.requestAnimationFrame(timestamp => this.animate(timestamp));
       }
     });
   }
@@ -266,9 +267,9 @@ class SceneHelper {
       // move towards viewer
       shape.translateOnAxis(shape.worldToLocal(new THREE.Vector3(0, this.controls.userHeight, 0)), 0.01);
 
-      shape.rotation.x += delta * shape.rotationSpeed.x;
-      shape.rotation.y += delta * shape.rotationSpeed.y;
-      shape.rotation.z += delta * shape.rotationSpeed.z;
+      shape.rotateX(delta * shape.rotationSpeed.x);
+      shape.rotateY(delta * shape.rotationSpeed.y);
+      shape.rotateZ(delta * shape.rotationSpeed.z);
     });
   }
 
@@ -287,7 +288,7 @@ class SceneHelper {
     // Render the scene.
     this.effect.render(this.scene, this.camera);
 
-    this.vrDisplay.requestAnimationFrame(() => this.animate());
+    this.vrDisplay.requestAnimationFrame(timestamp => this.animate(timestamp));
   }
 
   setStageDimensions(stage) {
