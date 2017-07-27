@@ -9,3 +9,4 @@ Session.vim
 .idea/
 node_modules/
 package-lock.json
+cubes/bundle.js

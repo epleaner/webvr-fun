@@ -26,7 +26,7 @@ export default class SceneHelper {
     // Setup three.js WebGL renderer. Note: Antialiasing is a big performance hit.
     // Only enable it if you actually need to.
     this.renderer = new THREE.WebGLRenderer({
-      antialias: false
+      antialias: true
     });
 
     this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -44,7 +44,6 @@ export default class SceneHelper {
 
     // Create a three.js camera.
     this.camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 10000);
-
 
     // Create three.js VR controls.
     this.controls = new THREE.VRControls(this.camera);

@@ -100,7 +100,6 @@ var drawShapes = function drawShapes(scene) {
     var min = -50;
 
     shape.position.set(randomInRange(-50, 50), randomInRange(-50, 50), randomInRange(-50, 50));
-    console.log(shape.position);
     shape.rotationSpeed = {
       x: randomInRange(-1, 1),
       y: randomInRange(-1, 1),
@@ -154,7 +153,7 @@ class SceneHelper {
     // Setup three.js WebGL renderer. Note: Antialiasing is a big performance hit.
     // Only enable it if you actually need to.
     this.renderer = new THREE.WebGLRenderer({
-      antialias: false
+      antialias: true
     });
 
     this.renderer.setPixelRatio(window.devicePixelRatio);
