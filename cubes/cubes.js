@@ -17,14 +17,23 @@ const drawShapes = (scene) => {
   const count = 50;
   const range = 100;
 
-  for(let i = 1; i < count; i++) {
+  for (let i = 1; i < count; i++) {
     let shape = new THREE.Mesh(geometry, material);
 
-    shape.position.set(randomInRange(-range, range), randomInRange(-range, range) , randomInRange(-range, range));
+    shape.position.set(randomInRange(-range, range), randomInRange(-range, range), randomInRange(-range, range));
     shape.rotationSpeed = {
       x: randomInRange(-1, 1),
       y: randomInRange(-1, 1),
       z: randomInRange(-1, 1)
+    }
+
+    shape.animate = (delta) => {
+      // move towards viewer
+      shape.translateOnAxis(shape.worldToLocal(new THREE.Vector3(0, 0, 0)), 0.01);
+
+      shape.rotateX(delta * shape.rotationSpeed.x);
+      shape.rotateY(delta * shape.rotationSpeed.y);
+      shape.rotateZ(delta * shape.rotationSpeed.z);
     }
 
     scene.shapes.push(shape);

@@ -47,9 +47,9 @@ export default class SceneHelper {
 
     // Create three.js VR controls.
     this.controls = new THREE.VRControls(this.camera);
-    this.controls.standing = true;
+    this.controls.standing = false;
 
-    this.camera.position.y = this.controls.userHeight;
+    this.camera.position.y = 0;
   }
 
   initWindowEvents() {
@@ -76,7 +76,7 @@ export default class SceneHelper {
 
     this.vrButton.on('exit', function() {
       this.camera.quaternion.set(0, 0, 0, 1);
-      this.camera.position.set(0, this.controls.userHeight, 0);
+      this.camera.position.set(0, 0, 0);
     });
     this.vrButton.on('hide', function() {
       document.getElementById('ui').style.display = 'none';
@@ -135,14 +135,7 @@ export default class SceneHelper {
 
     this.lastRenderTime = timestamp;
 
-    this.scene.shapes.forEach(shape => {
-      // move towards viewer
-      shape.translateOnAxis(shape.worldToLocal(new THREE.Vector3(0, this.controls.userHeight, 0)), 0.01);
-
-      shape.rotateX(delta * shape.rotationSpeed.x);
-      shape.rotateY(delta * shape.rotationSpeed.y);
-      shape.rotateZ(delta * shape.rotationSpeed.z);
-    });
+    this.scene.shapes.forEach(shape => shape.animate(delta));
   }
 
   // Request animation frame loop function
